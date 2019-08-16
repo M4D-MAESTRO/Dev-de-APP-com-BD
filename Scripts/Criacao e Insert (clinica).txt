@@ -1,0 +1,107 @@
+DROP DATABASE clinica;
+create DATABASE Clinica;
+use clinica;
+
+create table Ambulatorios(
+	nroa int primary key not null,
+    andar numeric(3) not null, 
+    capacidade smallint
+);
+
+create table Medicos(
+	codm int primary key not null,
+    nome varchar(40) not null,
+    idade smallint not null,
+    especialidade char(20),
+    cpf numeric(11),
+    cidade varchar(30),
+	
+    nroa int,
+    FOREIGN KEY (nroa) REFERENCES Ambulatorios(nroa),
+    
+    UNIQUE(cpf)
+);
+
+
+create table Pacientes(
+	codp int primary key not null,
+    nome varchar(40) not null,
+    idade smallint not null,
+    cidade varchar(30), 
+    cpf numeric(11),
+    doenca varchar(40) not null,
+    
+    UNIQUE(cpf)
+);
+
+
+create table Funcionarios(
+	codf int primary key not null,
+    nome varchar(40) not null,
+    idade smallint not null,
+    cidade varchar(30),
+    salario numeric (10),
+    cpf numeric(11),    
+    cargo varchar(20),
+    
+    nroa int,
+    FOREIGN KEY (nroa) REFERENCES Ambulatorios(nroa),
+    UNIQUE(cpf)
+);
+
+create table Consultas(
+	codm int not null,
+    codp int not null,
+    dataC date not null,
+    hora time not null,
+    
+    FOREIGN KEY (codm) REFERENCES Medicos(codm),
+    FOREIGN KEY (codp) REFERENCES Pacientes(codp),
+    PRIMARY KEY (codm, codp, dataC, hora)
+);
+
+
+INSERT INTO ambulatorios values (1, 1, 30);
+INSERT INTO ambulatorios values (2, 1, 50);
+INSERT INTO ambulatorios values (3, 2, 40);
+INSERT INTO ambulatorios values (4, 2, 25);
+INSERT INTO ambulatorios values (5, 2, 55);
+
+INSERT INTO medicos values(1, 'João', 40, 'Ortopedia', 10000100000, 'Florianopolis', 1);
+INSERT INTO medicos values(2, 'Maria', 42, 'Traumatologia', 10000110000, 'Blumenau', 2);
+INSERT INTO medicos values(3, 'Pedro', 51, 'Pediatria', 11000100000, 'São José', 2);
+INSERT INTO medicos values(4, 'Carlos', 28, 'Ortopedia', 11000110000, 'Joinville', null);
+INSERT INTO medicos values(5, 'Marcia', 33, 'Neurologia', 11000111000, 'Biguacu', 3);
+
+INSERT INTO pacientes values(1, 'Ana', 20, 'Florianopolis', 20000200000, 'Gripe');
+INSERT INTO pacientes values(2, 'Paulo', 24, 'Palhoca', 20000220000, 'Fratura');
+INSERT INTO pacientes values(3, 'Lucia', 30, 'Biguacu', 22000200000, 'Tendinite');
+INSERT INTO pacientes values(4, 'Carlos', 28, 'Joinville', 11000110000, 'Sarampo');
+
+INSERT INTO funcionarios values(1, 'Rita', 32, 'São José', 1200,2000010000, null, null);
+INSERT INTO funcionarios values(2, 'Maria', 55, 'Palhoca', 1220,3000011000, null, null);
+INSERT INTO funcionarios values(3, 'Caio', 45, 'Florianopolis', 1100,4100010000, null, null);
+INSERT INTO funcionarios values(4, 'Carlos', 44, 'Florianopolis', 1200,5100011000, null, null);
+INSERT INTO funcionarios values(5, 'Paula', 33, 'Florianopolis', 2500,6100011100, null, null);
+
+INSERT INTO consultas VALUES(1, 1, '2006/06/12', '14:00');
+INSERT INTO consultas VALUES(1, 4, '2006/06/13', '10:00');
+INSERT INTO consultas VALUES(2, 1, '2006/06/13', '9:00');
+INSERT INTO consultas VALUES(2, 2, '2006/06/13', '11:00');
+INSERT INTO consultas VALUES(2, 3, '2006/06/14', '14:00');
+INSERT INTO consultas VALUES(2, 4, '2006/06/14', '17:00');
+INSERT INTO consultas VALUES(3, 1, '2006/06/19', '18:00');
+INSERT INTO consultas VALUES(3, 3, '2006/06/12', '10:00');
+INSERT INTO consultas VALUES(3, 4, '2006/06/19', '13:00');
+INSERT INTO consultas VALUES(4, 4, '2006/06/20', '13:00');
+INSERT INTO consultas VALUES(4, 4, '2006/06/22', '19:30');
+
+UPDATE pacientes SET cidade = 'Ilhota' WHERE codp = 2;
+UPDATE consultas SET dataC = '2006/07/04', hora = '12:00' WHERE codm = 1 and codp = 4;
+UPDATE pacientes SET idade = 21, doenca = 'Câncer' where codp = 1;
+UPDATE consultas SET hora = '14:30' where codm = 3 and codp = 4;
+
+DELETE FROM funcionarios where codf = 4;
+DELETE FROM consultas where hora BETWEEN '19:00' and '00:00';
+/*DELETE FROM pacientes where doenca = 'Câncer' or idade <= 10;*/
+DELETE FROM medicos where cidade IN('Biguacu', 'Palhoca')

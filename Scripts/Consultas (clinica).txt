@@ -1,0 +1,16 @@
+use clinica;
+
+select nome, cpf from medicos where idade <= 40 or especialidade != 'Traumatologia';
+select * from consultas where dataC = '2006/06/19' and hora BETWEEN '12:00' and '18:00';
+select nome, idade from pacientes where cidade != 'Florianopolis';
+SELECT hora from consultas where dataC  <= '2006/06/14' or dataC >= '2006/06/20';
+SELECT nome, idade*12 as 'Meses' from pacientes;
+SELECT nome, cidade from funcionarios;
+SELECT min(salario), max(salario) from funcionarios WHERE cidade = 'Florianopolis';
+SELECT hora from consultas where dataC = '2006/06/13' ORDER by hora desc limit 1;
+select avg(idade), SUM(nroa) from medicos;
+SELECT codf, nome, salario - salario *0.2 from funcionarios;
+select nome from funcionarios where nome like '%a';
+select nome, cpf from funcionarios WHERE cpf like '%00000%';
+select nome, especialidade from medicos where nome like '_o%o';
+select codp, nome from pacientes where idade >= 25 and doenca IN('tendinite', 'fratura', 'gripe', 'sarampo')
