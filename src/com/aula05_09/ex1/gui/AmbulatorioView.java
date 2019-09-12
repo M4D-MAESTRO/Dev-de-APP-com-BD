@@ -15,17 +15,16 @@ public class AmbulatorioView extends javax.swing.JFrame {
 
     private void listar() {
         ambulatorios = dao.getAll();
-        //dao.getAll().stream().forEach(x -> System.out.println(x.toString()));
 
         DefaultTableModel model = (DefaultTableModel) jTableTabela.getModel();
         model.setNumRows(0);
-        for (Ambulatorio ambulatorio : ambulatorios) {
+        ambulatorios.forEach((amb) -> {
             model.addRow(new Object[]{
-                ambulatorio.getNroa(),
-                ambulatorio.getAndar(),
-                ambulatorio.getCapacidade()
+                amb.getNroa(),
+                amb.getAndar(),
+                amb.getCapacidade()
             });
-        }
+        });
     }
 
     public AmbulatorioView() {
@@ -51,6 +50,8 @@ public class AmbulatorioView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Ambulatório", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
         jLabel1.setText("Número do andar: ");
 
@@ -199,7 +200,7 @@ public class AmbulatorioView extends javax.swing.JFrame {
 
     private void jButtonDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDelActionPerformed
         try {
-            dao.delete(ambulatorio.getNroa());
+            dao.delete(ambulatorio);
             listar();
         } catch (NullPointerException e) {
             JOptionPane.showMessageDialog(null, "Selecione uma linha antes de excluir!");

@@ -14,6 +14,12 @@ public class Medico {
     public Medico() {
     }
 
+    public Medico(Integer codm) {
+        this.codm = codm;
+    }
+    
+    
+
     public Medico(Integer codm, String nome, Integer idade, String especialidade, String cpf, String cidade, Ambulatorio ambulatorio) {
         this.codm = codm;
         this.nome = nome;

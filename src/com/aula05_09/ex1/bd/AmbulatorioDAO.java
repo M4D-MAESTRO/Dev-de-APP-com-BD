@@ -48,12 +48,12 @@ public class AmbulatorioDAO implements DAO<Ambulatorio> {
     }
 
     @Override
-    public void delete(Integer nroa) {
+    public void delete(Ambulatorio object) {
         String query = "DELETE FROM ambulatorios WHERE nroa = ?";
         
         try {
             PreparedStatement ps = con.prepareStatement(query);
-            ps.setInt(1, nroa);
+            ps.setInt(1, object.getNroa());
             ps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Excluído com sucesso!");
         } catch (SQLException ex) {
@@ -105,6 +105,6 @@ public class AmbulatorioDAO implements DAO<Ambulatorio> {
 
     public static void main(String a[]) {
         AmbulatorioDAO dao = new AmbulatorioDAO();
-        dao.update(new Ambulatorio(9, 5, 5));
+        dao.insert(new Ambulatorio(null, 3, 100));
     }
 }

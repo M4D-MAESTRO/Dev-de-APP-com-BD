@@ -12,10 +12,13 @@ import java.util.List;
  * @author 2017102465
  */
 public interface DAO<T> {
-    
+
     public void insert(T object);
-    public void delete (Integer id);
+
+    public void delete(T object);
+
     public void update(T object);
+
     public List<T> getAll();
-    
+
 }
