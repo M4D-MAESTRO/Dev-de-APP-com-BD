@@ -56,7 +56,7 @@ public class MedicoView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableTabela = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Médico", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
@@ -69,6 +69,12 @@ public class MedicoView extends javax.swing.JFrame {
         jTextFieldIdMedico.setEditable(false);
 
         jLabel4.setText("CPF");
+
+        try {
+            jFormattedTextFieldCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         jLabel5.setText("Cidade");
 
@@ -251,7 +257,7 @@ public class MedicoView extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, true, true, true
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -291,7 +297,7 @@ public class MedicoView extends javax.swing.JFrame {
 
     private void jButtonInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInsertActionPerformed
         medico = new Medico(jTextFieldNome.getText(), Integer.parseInt(jTextFieldIdade.getText()), jTextFieldEspecialidade.getText(),
-                jFormattedTextFieldCpf.getText(), jTextFieldCidade.getText(), ambulatorio);
+                getCPF(), jTextFieldCidade.getText(), ambulatorio);
         dao.insert(medico);
         listarMedicos();
     }//GEN-LAST:event_jButtonInsertActionPerformed
@@ -310,7 +316,7 @@ public class MedicoView extends javax.swing.JFrame {
     private void jButtonAttActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAttActionPerformed
         try {
             medico = new Medico(Integer.parseInt(jTextFieldIdMedico.getText()), jTextFieldNome.getText(), Integer.parseInt(jTextFieldIdade.getText()), jTextFieldEspecialidade.getText(),
-                    jFormattedTextFieldCpf.getText(), jTextFieldCidade.getText(), ambulatorio);
+                    getCPF(), jTextFieldCidade.getText(), ambulatorio);
             dao.update(medico);
             listarMedicos();
             jButtonAtt.setEnabled(false);
@@ -397,6 +403,10 @@ public class MedicoView extends javax.swing.JFrame {
                 med.getAmbulatorio().getNroa() != 0 ? med.getAmbulatorio().getNroa() : ""
             });
         });
+    }
+
+    private String getCPF() {
+        return jFormattedTextFieldCpf.getText().replace(".", "").replace("-", "");
     }
 
     /**

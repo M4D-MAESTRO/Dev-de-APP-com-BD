@@ -106,7 +106,7 @@ public class Consulta {
 
     @Override
     public String toString() {
-        return "Médico: " + medico.getNome() + "\nNo paciente " + paciente.getNome()
+        return "Médico: " + medico + "\nNo paciente " + paciente
                 + "\nNo dia: " + dataC.format(dataFormat) + " às " + hora.format(horaFormat) + "\n\n";
     }
 

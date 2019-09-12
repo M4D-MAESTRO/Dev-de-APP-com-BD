@@ -107,4 +107,9 @@ public class AmbulatorioDAO implements DAO<Ambulatorio> {
         AmbulatorioDAO dao = new AmbulatorioDAO();
         dao.insert(new Ambulatorio(null, 3, 100));
     }
+
+    @Override
+    public List<Ambulatorio> getByNome(String nome) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

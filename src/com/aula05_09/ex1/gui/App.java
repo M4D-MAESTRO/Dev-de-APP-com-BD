@@ -1,9 +1,7 @@
-
 package com.aula05_09.ex1.gui;
 
 public class App extends javax.swing.JFrame {
 
-    
     public App() {
         initComponents();
     }
@@ -17,6 +15,8 @@ public class App extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuAmb = new javax.swing.JMenuItem();
         jMenuMed = new javax.swing.JMenuItem();
+        jMenuItemPaciente = new javax.swing.JMenuItem();
+        jMenuItemConsulta = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -32,7 +32,7 @@ public class App extends javax.swing.JFrame {
             .addGap(0, 257, Short.MAX_VALUE)
         );
 
-        jMenu1.setText("File");
+        jMenu1.setText("Opções");
 
         jMenuAmb.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK));
         jMenuAmb.setText("Ambulatório");
@@ -45,7 +45,30 @@ public class App extends javax.swing.JFrame {
 
         jMenuMed.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.ALT_MASK));
         jMenuMed.setText("Médico");
+        jMenuMed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuMedActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuMed);
+
+        jMenuItemPaciente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItemPaciente.setText("Paciente");
+        jMenuItemPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemPacienteActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItemPaciente);
+
+        jMenuItemConsulta.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItemConsulta.setText("Consulta");
+        jMenuItemConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemConsultaActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItemConsulta);
 
         jMenuBar1.add(jMenu1);
 
@@ -80,6 +103,27 @@ public class App extends javax.swing.JFrame {
         view.setVisible(true);
         view.toFront();
     }//GEN-LAST:event_jMenuAmbActionPerformed
+
+    private void jMenuMedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuMedActionPerformed
+        MedicoView view = new MedicoView();
+        view.setEnabled(true);
+        view.setVisible(true);
+        view.toFront();
+    }//GEN-LAST:event_jMenuMedActionPerformed
+
+    private void jMenuItemPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPacienteActionPerformed
+        PacienteView view = new PacienteView();
+        view.setEnabled(true);
+        view.setVisible(true);
+        view.toFront();
+    }//GEN-LAST:event_jMenuItemPacienteActionPerformed
+
+    private void jMenuItemConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConsultaActionPerformed
+        ConsultaView view = new ConsultaView();
+        view.setEnabled(true);
+        view.setVisible(true);
+        view.toFront();
+    }//GEN-LAST:event_jMenuItemConsultaActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -118,6 +162,8 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuItem jMenuAmb;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItemConsulta;
+    private javax.swing.JMenuItem jMenuItemPaciente;
     private javax.swing.JMenuItem jMenuMed;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

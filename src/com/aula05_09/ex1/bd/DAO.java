@@ -18,6 +18,8 @@ public interface DAO<T> {
     public void delete(T object);
 
     public void update(T object);
+    
+    public List<T> getByNome(String nome);
 
     public List<T> getAll();
 

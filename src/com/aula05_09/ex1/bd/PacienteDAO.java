@@ -1,5 +1,7 @@
 package com.aula05_09.ex1.bd;
 
+import com.aula05_09.ex1.domain.Ambulatorio;
+import com.aula05_09.ex1.domain.Medico;
 import com.aula05_09.ex1.domain.Paciente;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import java.sql.Connection;
@@ -127,8 +129,9 @@ public class PacienteDAO implements DAO<Paciente> {
     }
 
     public static void main(String args[]) {
-        PacienteDAO dao = new PacienteDAO();
-        Paciente paciente = new Paciente("Henrique", 18, "Rio de Janeiro", "19897", "NADA");
+        //PacienteDAO dao = new PacienteDAO();
+        // dao.getByNome("o").stream().forEach(x -> System.out.println(x.toString()));
+
         //dao.insert(paciente);
         //dao.update(new Paciente(5, "Henrique", 22, "Rio de Janeiro", "19897", "CONTINUA SEM NADA"));
         //dao.delete(5);
@@ -136,6 +139,29 @@ public class PacienteDAO implements DAO<Paciente> {
         /*dao.getAll().stream().forEach(medico1 -> {
             System.out.println(medico1);
         });*/
+    }
+
+    @Override
+    public List<Paciente> getByNome(String nome) {
+        List<Paciente> pacientes = new ArrayList<>();
+        con = Conexao.getConexao();
+        String query = "SELECT * FROM pacientes WHERE nome LIKE ?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, '%' + nome + '%');
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Paciente paciente = new Paciente(rs.getInt("codp"), rs.getString("nome"), rs.getInt("idade"),
+                        rs.getString("cidade"), rs.getString("cpf"), rs.getString("doenca"));
+                pacientes.add(paciente);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MedicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return pacientes;
     }
 
 }

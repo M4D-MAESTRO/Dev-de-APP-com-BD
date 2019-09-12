@@ -136,6 +136,8 @@ public class MedicoDAO implements DAO<Medico> {
     }
 
     public static void main(String args[]) {
+       // MedicoDAO dao = new MedicoDAO();
+        //dao.getByNome("a").stream().forEach(x -> System.out.println(x.toString()));
         // MedicoDAO dao = new MedicoDAO();
         // Medico medico = new Medico("Henrique", 22, "DEV", "158745", "Rio de Janeiro", new Ambulatorio(1, null, null));
         //dao.insert(medico);
@@ -146,6 +148,30 @@ public class MedicoDAO implements DAO<Medico> {
 
  /*dao.update(new Medico(5, "Henrique", 18, "", "789789", "Rio de Janeiro", new Ambulatorio(1, null, null)));*/
         // dao.delete(6);
+    }
+
+    @Override
+    public List<Medico> getByNome(String nome) {
+        List<Medico> medicos = new ArrayList<>();
+        con = Conexao.getConexao();
+        String query = "SELECT * FROM medicos WHERE nome LIKE ?";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, '%' + nome + '%');
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Ambulatorio ambulatorio = new Ambulatorio(rs.getInt("nroa"), null, null);
+                Medico medico = new Medico(rs.getInt("codm"), rs.getString("nome"), rs.getInt("idade"),
+                        rs.getString("especialidade"), rs.getString("cpf"), rs.getString("cidade"), ambulatorio);
+                medicos.add(medico);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MedicoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return medicos;
     }
 
 }
