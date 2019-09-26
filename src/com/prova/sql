@@ -1,0 +1,14 @@
+/*AV1*/
+create database prova;
+use prova;
+
+create table PRODUTOS(
+		id int auto_increment primary key,
+		descricao varchar(255),
+		valor double,
+		quantidade int
+);
+
+select * from PRODUTOS;
+
+
